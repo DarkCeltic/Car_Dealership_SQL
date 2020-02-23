@@ -3,6 +3,7 @@ package com.revature.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.revature.dao.UsersDAOImpl;
 import com.revature.users.Customer;
 import com.revature.users.Employee;
 
@@ -14,8 +15,10 @@ public class Users implements Serializable {
 
 	ArrayList<Customer> customers = new ArrayList<Customer>();
 	ArrayList<Employee> employees = new ArrayList<Employee>();
+	UsersDAOImpl users = new UsersDAOImpl();
 
 	public ArrayList<Customer> getCustomers() {
+		customers = users.selectAllCustomers();
 		return customers;
 	}
 
@@ -24,6 +27,7 @@ public class Users implements Serializable {
 	}
 
 	public ArrayList<Employee> getEmployees() {
+		employees = users.selectAllEmployees();
 		return employees;
 	}
 

@@ -1,23 +1,22 @@
 package com.revature.load_page;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.revature.dao.*;
-import com.revature.pojo.Database;
-import com.revature.pojo.Fleet;
+import com.revature.dao.UsersDAOImpl;
 import com.revature.pojo.Users;
 import com.revature.users.Customer;
 import com.revature.users.Employee;
 
 public class LoadPage {
-
-	DatabaseDAO dat = new DatabaseSerializationDAO();
+	Users user = new Users();
+	UsersDAOImpl userAdd = new UsersDAOImpl();
 	Scanner input = new Scanner(System.in);
 	private static Logger log = Logger.getRootLogger();
 
-	public void loginPage(Users users, Fleet fleet) {
+	public void loginPage() {
 
 		String option = "";
 
@@ -31,13 +30,12 @@ public class LoadPage {
 			option = input.nextLine();
 			switch (option) {
 			case "1":
-				login(users, fleet);
+				login();
 				break;
 			case "2":
-				register(users, fleet);
+				register();
 				break;
 			case "3":
-				saveData(users, fleet);
 				input.close();
 				System.out.println("Thank you for checking out Tattoine Used Starfighter Emporium, please come again!");
 				System.exit(0);
@@ -49,7 +47,7 @@ public class LoadPage {
 		}
 	}
 
-	public void login(Users users, Fleet fleet) {
+	public void login() {
 		String username = "", password = "";
 
 		String option = "";
@@ -67,37 +65,53 @@ public class LoadPage {
 		}
 		switch (option) {
 		case "1":
-			for (Customer cus : users.getCustomers()) {
-				System.out.println(cus.getUsername());
-				System.out.println(cus.getPassword());
-				if (cus.getUsername().equalsIgnoreCase(username) && cus.getPassword().equals(password)) {
-					log.info(username + " logged in");
-					cus.CustomerOptions(users, fleet);
+			ArrayList<Customer> cus = new ArrayList<>();
+			cus = user.getCustomers();
+			for (Customer c : cus) {
+				if (c.getUsername().equals(username)) {
+					if (c.getPassword().equals(password)) {
+						c.CustomerOptions();
+					} else {
+						log.info("The password you provided was incorrect");
+						login();
+					}
+				} else {
+					log.info("The username you provided does not exist");
+					login();
 				}
 			}
-			log.info("Sorry, your information was incorrect");
+
 			break;
 		case "2":
-			for (Employee emp : users.getEmployees()) {
-				System.out.println(emp.getUsername());
-				if (emp.getUsername().equalsIgnoreCase(username) && emp.getPassword().equals(password)) {
-					log.info(username + " logged in");
-					emp.employeeDecision(users, fleet);
+			ArrayList<Employee> emp = new ArrayList<>();
+			emp = user.getEmployees();
+			for (Employee e : emp) {
+				if (e.getUsername().equals(username)) {
+					if (e.getPassword().equals(password)) {
+						e.EmployeeOptions();
+					} else {
+						log.info("The password you provided was incorrect");
+						login();
+					}
+				} else {
+					log.info("The username you provided does not exist");
+					login();
 				}
+
 			}
-			log.info("Sorry, your information was incorrect");
 			break;
 		case "3":
-			loginPage(users, fleet);
+			loginPage();
 			break;
 		default:
 			System.out.println("That is not an option. Please try again.");
-			login(users, fleet);
+			login();
 			break;
 		}
+
 	}
 
-	public void register(Users users, Fleet fleet) {
+	public void register() {
 		input = new Scanner(System.in);
 		String first, last, userName, password, option;
 		System.out.println("Welcome to the registration page");
@@ -109,14 +123,17 @@ public class LoadPage {
 		userName = input.nextLine();
 		System.out.println("Please enter a password, this is case sensitive.");
 		password = input.nextLine();
-		for (Customer cus : users.getCustomers()) {
-			if (userName.equals(cus.getUsername())) {
+
+		ArrayList<Customer> cus = new ArrayList<>();
+		cus = user.getCustomers();
+		for (Customer c : cus) {
+			if (userName.equals(c.getUsername())) {
 				System.out.println("This username already exists, please try again");
-				register(users, fleet);
+				register();
 			} else {
 				Customer cust = new Customer(first, last, userName, password);
-				users.setCustomers(cust);
-				log.info(cust + " created");
+				userAdd.insertCustomer(cust);
+				log.info(cust.getUsername() + " profile created");
 				System.out.println();
 				System.out.println("Your account has been created " + cust.getFirstName());
 				System.out.println("If you would like to view your account Type 1");
@@ -124,32 +141,20 @@ public class LoadPage {
 				option = input.nextLine();
 				switch (option) {
 				case "1":
-					cust.CustomerOptions(users, fleet);
+					cust.CustomerOptions();
 					break;
 				case "2":
-					saveData(users, fleet);
 					input.close();
 					System.out.println(
 							"Thank you for checking out Tattoine Used Starfighter Emporium, please come again!");
 					System.exit(0);
 					break;
 				default:
-					loginPage(users, fleet);
+					loginPage();
 					break;
 
 				}
 			}
 		}
-	}
-
-	public void saveData(Users user, Fleet fleet) {
-		Database data = new Database(user, fleet);
-		dat.createDatabase(data);
-	}
-
-	public void loadData() {
-		Database data;
-		data = dat.loadDatabase();
-		loginPage(data.getUsers(), data.getFleet());
 	}
 }

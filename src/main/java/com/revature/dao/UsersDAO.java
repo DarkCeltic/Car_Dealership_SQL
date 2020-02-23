@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.users.Customer;
+import com.revature.users.Employee;
 
 public interface UsersDAO {
 	
@@ -17,9 +18,9 @@ public interface UsersDAO {
 //	public void updateCustomers(Customer cust);
 
 	// Employee Implementations
-	public Customer selectEmployeeByUsername(String username);
+	public Employee selectEmployeeByUsername(String username);
 
-	public List<Customer> selectAllEmployees();
+	public List<Employee> selectAllEmployees();
 
 
 }

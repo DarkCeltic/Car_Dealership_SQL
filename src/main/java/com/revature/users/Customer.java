@@ -6,15 +6,16 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.revature.dao.CarDAOImpl;
 import com.revature.load_page.LoadPage;
 import com.revature.pojo.Car;
 import com.revature.pojo.Fleet;
-import com.revature.pojo.Users;
-
-import jdk.internal.org.jline.utils.Log;
 
 public class Customer implements Serializable {
 	private static Logger log = Logger.getRootLogger();
+	Fleet fleet = new Fleet();
+	ArrayList<Car> allCars = new ArrayList<>();
+	CarDAOImpl getOwnerCars = new CarDAOImpl();
 	/**
 	 * 
 	 */
@@ -28,6 +29,9 @@ public class Customer implements Serializable {
 //	public public Customer() {
 //		super();
 //	}
+	public Customer() {
+		super();
+	}
 
 	public Customer(String firstName, String lastName, String username, String password) {
 		super();
@@ -35,10 +39,6 @@ public class Customer implements Serializable {
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
-	}
-	
-	public Customer() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getFirstName() {
@@ -87,7 +87,7 @@ public class Customer implements Serializable {
 				+ myCars + "]";
 	}
 
-	public void CustomerOptions(Users users, Fleet fleet) {
+	public void CustomerOptions() {
 		String option;
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome " + this.firstName + " to your account.");
@@ -97,58 +97,64 @@ public class Customer implements Serializable {
 		System.out.println("Type 4 to see how many payments that you have left on your vehicles");
 		System.out.println("Type 5 to go back to the main login screen.");
 		option = input.nextLine();
-		customerDecision(users, fleet, option);
+		customerDecision(option);
 	}
 
-	public void customerDecision(Users users, Fleet fleet, String option) {
+	public void customerDecision(String option) {
 		Scanner input = new Scanner(System.in);
+		allCars = fleet.getFleet();
 		switch (option) {
 		case "1":
-			for (Car c : fleet.getFleet()) {
-				if (c.isSold() == false) {
+			// TODO make sysout look cleaner
+			for (Car c : allCars) {
+				if (c.getOwner() == null) {
 					System.out.println(c);
 				}
 			}
 			System.out.println();
-			CustomerOptions(users, fleet);
+			CustomerOptions();
 			break;
 		case "2":
-			bid(users, fleet);
+			bid();
 			System.out.println();
-			CustomerOptions(users, fleet);
+			CustomerOptions();
 			break;
 		case "3":
+			// TODO make sysout look cleaner
+			for (Car c : getOwnerCars.selectCarByOwner(this.username))
 			if (myCars.isEmpty()) {
 				System.out.println("You do not own any vehicles yet.");
 			} else {
 				System.out.println(myCars.toString());
 				System.out.println();
 			}
-			CustomerOptions(users, fleet);
+			CustomerOptions();
 			break;
 		case "4":
+			// TODO make sysout look cleaner
 			if (myCars.isEmpty()) {
 				System.out.println("You have not purchased any vehicles yet");
 			} else {
 				for (Car c : myCars) {
-					System.out.println("You have " + c.getRemainingPayments() + " payments of $" +c.getMonthlyPayments() + "left on " + c.toString());
+					System.out.println(
+							"You have " + " payments of $" + c.getMonthlyPayments() + "left on " + c.toString());
 				}
 			}
 			System.out.println();
-			CustomerOptions(users, fleet);
+			CustomerOptions();
 			break;
 		case "5":
 			LoadPage login = new LoadPage();
-			login.loginPage(users, fleet);
+			login.loginPage();
 			break;
 		default:
 			System.out.println("That is not a vaild option, please try again");
-			CustomerOptions(users, fleet);
+			CustomerOptions();
 			break;
 		}
 	}
 
-	public void bid(Users users, Fleet fleet) {
+	public void bid() {
 		Scanner input = new Scanner(System.in);
 		String carVIN;
 		Double offerPrice;
@@ -156,12 +162,13 @@ public class Customer implements Serializable {
 		carVIN = input.nextLine();
 		System.out.println("How much do you want to offer for the vehicle");
 		offerPrice = Double.parseDouble(input.nextLine());
-		for (Car c : fleet.getFleet()) {
+		for (Car c : allCars) {
 			if (c.getVIN().equals(carVIN)) {
-				c.getOffers().put(this.username, offerPrice);
+
+//				c.getOffers().put(this.username, offerPrice);
 				log.info(this.username + " made an offer on " + c.toString());
 				break;
-			} 
+			}
 		}
 	}
 }

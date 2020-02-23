@@ -6,7 +6,7 @@ public class Driver {
 	public static void main(String[] args) {
 //
 		LoadPage deathStarEmporium = new LoadPage();
-		deathStarEmporium.loadData();
+		deathStarEmporium.loginPage();;
 
 //		Customer c1 = new Customer();
 //		c1.setFirstName("Kenneth");

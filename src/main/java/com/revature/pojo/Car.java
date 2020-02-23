@@ -12,18 +12,25 @@ public class Car implements Serializable {
 	 */
 	Customer cust;
 	private static final long serialVersionUID = 5948001344421180853L;
-	private boolean sold = false;
+//	private boolean sold = false;
 	private double price;
-	private int remainingPayments = 60;
-	private Customer owner;
+	private String owner = null;
 	private String VIN;
 	private String make;
 	private String model;
 	private String year;
-	private Map<String, Double> offers = new HashMap<String, Double>();
+//	private Map<String, Double> offers = new HashMap<String, Double>();
 	private double monthlyPayments;
 
-	public Car(double price, String vIN, String make, String model, String mileage, String year) {
+	public Car(double price, String make, String model, String year) {
+		super();
+		this.price = price;
+		this.make = make;
+		this.model = model;
+		this.year = year;
+	}
+
+	public Car(double price, String vIN, String make, String model, String year) {
 		super();
 		this.price = price;
 		VIN = vIN;
@@ -32,13 +39,13 @@ public class Car implements Serializable {
 		this.year = year;
 	}
 
-	public boolean isSold() {
-		return sold;
-	}
-
-	public void setSold(boolean sold) {
-		this.sold = sold;
-	}
+//	public boolean isSold() {
+//		return sold;
+//	}
+//
+//	public void setSold(boolean sold) {
+//		this.sold = sold;
+//	}
 
 	public double getPrice() {
 		return price;
@@ -48,19 +55,19 @@ public class Car implements Serializable {
 		this.price = price;
 	}
 
-	public void setRemainingPayments(int i) {
-		remainingPayments = i;
-	}
+//	public void setRemainingPayments(int i) {
+//		remainingPayments = i;
+//	}
+//
+//	public int getRemainingPayments() {
+//		return remainingPayments;
+//	}
 
-	public int getRemainingPayments() {
-		return remainingPayments;
-	}
-
-	public Customer getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Customer owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 
@@ -96,17 +103,17 @@ public class Car implements Serializable {
 		this.year = year;
 	}
 
-	public Map<String, Double> getOffers() {
-		return offers;
-	}
-
-	public void setOffers(String username, Double offer) {
-
-		offers.put(username, offer);
-	}
+//	public Map<String, Double> getOffers() {
+//		return offers;
+//	}
+//
+//	public void setOffers(String username, Double offer) {
+//
+//		offers.put(username, offer);
+//	}
 
 	public double getMonthlyPayments() {
-		return (price / remainingPayments) + (price / remainingPayments) * 0.0445;
+		return (price / 60) + (price / 60) * 0.0445;
 	}
 
 	public void setMonthlyPayments(int monthlyPayments) {
@@ -123,13 +130,13 @@ public class Car implements Serializable {
 		long temp;
 		temp = Double.doubleToLongBits(monthlyPayments);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((offers == null) ? 0 : offers.hashCode());
+//		result = prime * result + ((offers == null) ? 0 : offers.hashCode());
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + remainingPayments;
-		result = prime * result + (sold ? 1231 : 1237);
+//		result = prime * result + remainingPayments;
+//		result = prime * result + (sold ? 1231 : 1237);
 		result = prime * result + ((year == null) ? 0 : year.hashCode());
 		return result;
 	}
@@ -160,11 +167,11 @@ public class Car implements Serializable {
 			return false;
 		if (Double.doubleToLongBits(monthlyPayments) != Double.doubleToLongBits(other.monthlyPayments))
 			return false;
-		if (offers == null) {
-			if (other.offers != null)
-				return false;
-		} else if (!offers.equals(other.offers))
-			return false;
+//		if (offers == null) {
+//			if (other.offers != null)
+//				return false;
+//		} else if (!offers.equals(other.offers))
+//			return false;
 		if (owner == null) {
 			if (other.owner != null)
 				return false;
@@ -172,10 +179,10 @@ public class Car implements Serializable {
 			return false;
 		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
-		if (remainingPayments != other.remainingPayments)
-			return false;
-		if (sold != other.sold)
-			return false;
+//		if (remainingPayments != other.remainingPayments)
+//			return false;
+//		if (sold != other.sold)
+//			return false;
 		if (year == null) {
 			if (other.year != null)
 				return false;
@@ -186,15 +193,15 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		//TODO change this to look cleaner/neater
-		return "Car [ " + year + " " + make + " " + model + " miles="  + " $" + price + " VIN=" + VIN + "]";
+		// TODO change this to look cleaner/neater
+		return "Car [ " + year + " " + make + " " + model + " miles=" + " $" + price + " VIN=" + VIN + "]";
 	}
-
-	public void toStringOffer() {
-		for (Map.Entry<String, Double> entry : offers.entrySet()) {
-			System.out.println(entry.getKey() + " offer amonut is $" + entry.getValue().toString()
-					+ " and the VIN of Vehicle offer is: " + this.VIN);
-		}
-	}
+//TODO change this to add SQL database offers
+//	public void toStringOffer() {
+//		for (Map.Entry<String, Double> entry : offers.entrySet()) {
+//			System.out.println(entry.getKey() + " offer amount is $" + entry.getValue().toString()
+//					+ " and the VIN of Vehicle offer is: " + this.VIN);
+//		}
+//	}
 
 }

@@ -130,8 +130,8 @@ public class Employee implements Serializable {
 				for (Customer e : users.getCustomers()) {
 					if (!e.getMyCars().isEmpty()) {
 						for (Car c : e.getMyCars()) {
-							System.out.println(e.getUsername() + " has " + c.getRemainingPayments()
-									+ " Monthly Payments of: $" + c.getMonthlyPayments() + " left");
+							System.out.println(e.getUsername() + " has " + " Monthly Payments of: $"
+									+ c.getMonthlyPayments() + " left");
 						}
 					}
 
@@ -151,7 +151,7 @@ public class Employee implements Serializable {
 			}
 		}
 		LoadPage login = new LoadPage();
-		login.loginPage(users, fleet);
+//		login.loginPage(users, fleet);
 	}
 
 	public Fleet acceptOrRejectoffer(String option, Users users, Fleet fleet) {
@@ -170,7 +170,7 @@ public class Employee implements Serializable {
 							c.setSold(true);
 							c.setPrice(c.getOffers().get(username));
 							cus.setMyCars(c);
-							c.setOwner(cus);
+//							c.setOwner(cus);
 							c.getOffers().clear();
 							fleet.removeCar(c);
 							log.info(c.toString() + " was sold to customer " + cus.toString());
@@ -219,7 +219,7 @@ public class Employee implements Serializable {
 		mileage = input.nextLine();
 		System.out.println("Please enter the Price of the vehicle.");
 		price = Double.parseDouble(input.nextLine());
-		Car c = new Car(price, vIN, make, model, mileage, year);
+		Car c = new Car(price, vIN, make, model, year);
 		fleet.setFleet(c);
 		log.info(c.toString() + " was created by " + this.username);
 		return fleet;
