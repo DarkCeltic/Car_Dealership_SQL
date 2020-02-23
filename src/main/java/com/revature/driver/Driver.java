@@ -32,7 +32,7 @@ public class Driver {
 //		Car car1 = new Car(10000, "123456", "Ford", "F150", "50", "2019");
 //		Car car2 = new Car(15000, "987645", "Chevy", "Silverado", "25", "2020");
 //		Car car3 = new Car(1000000, "156688", "Radon-Ulzer Repulsorlift", "Custom Built Podracer", "25000", "1999");
-//		Car car4 = new Car(25000, "144931", "Incom Corporation", "T-65 X-wing starfighter", "20000", "1977");
+//		Car car4 = new Car(25000, "144931", "Incom Corporation", "19 starfighter", "20000", "1977");
 //		Car car5 = new Car(45000, "51194", "Sienar Fleet Systems ", "Tie Fighter", "150000", "1983");
 //		Car car6 = new Car(50000, "821178", "Kuat Drive Yards", "Star Destroyer", "100000", "1980");
 //		Car car7 = new Car(500000, "982248", "Corellian Engineering Corporation", " YT-1300 Corellian light freighter",

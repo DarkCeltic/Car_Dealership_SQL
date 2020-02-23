@@ -69,6 +69,7 @@ public class LoadPage {
 		case "1":
 			for (Customer cus : users.getCustomers()) {
 				System.out.println(cus.getUsername());
+				System.out.println(cus.getPassword());
 				if (cus.getUsername().equalsIgnoreCase(username) && cus.getPassword().equals(password)) {
 					log.info(username + " logged in");
 					cus.CustomerOptions(users, fleet);

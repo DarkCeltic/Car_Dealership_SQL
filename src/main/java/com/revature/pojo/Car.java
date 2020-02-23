@@ -19,7 +19,6 @@ public class Car implements Serializable {
 	private String VIN;
 	private String make;
 	private String model;
-	private String mileage;
 	private String year;
 	private Map<String, Double> offers = new HashMap<String, Double>();
 	private double monthlyPayments;
@@ -30,7 +29,6 @@ public class Car implements Serializable {
 		VIN = vIN;
 		this.make = make;
 		this.model = model;
-		this.mileage = mileage;
 		this.year = year;
 	}
 
@@ -90,14 +88,6 @@ public class Car implements Serializable {
 		this.model = model;
 	}
 
-	public String getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(String mileage) {
-		this.mileage = mileage;
-	}
-
 	public String getYear() {
 		return year;
 	}
@@ -129,7 +119,6 @@ public class Car implements Serializable {
 		int result = 1;
 		result = prime * result + ((VIN == null) ? 0 : VIN.hashCode());
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
-		result = prime * result + ((mileage == null) ? 0 : mileage.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(monthlyPayments);
@@ -164,11 +153,6 @@ public class Car implements Serializable {
 				return false;
 		} else if (!make.equals(other.make))
 			return false;
-		if (mileage == null) {
-			if (other.mileage != null)
-				return false;
-		} else if (!mileage.equals(other.mileage))
-			return false;
 		if (model == null) {
 			if (other.model != null)
 				return false;
@@ -202,7 +186,8 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Car [ " + year + " " + make + " " + model + " miles=" + mileage + " $" + price + " VIN=" + VIN + "]";
+		//TODO change this to look cleaner/neater
+		return "Car [ " + year + " " + make + " " + model + " miles="  + " $" + price + " VIN=" + VIN + "]";
 	}
 
 	public void toStringOffer() {

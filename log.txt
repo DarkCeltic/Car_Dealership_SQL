@@ -90,3 +90,54 @@
 2020-02-20 21:53:29 INFO  root:58 - Database was deserialized
 2020-02-20 21:53:45 INFO  root:118 - Customer [firstName=David, lastName=Smith, username=DSMi, myCars=[]] created
 2020-02-20 21:53:56 INFO  root:27 - Database was serialized
+2020-02-21 09:30:21 INFO  root:58 - Database was deserialized
+2020-02-21 09:30:30 INFO  root:73 - kstra logged in
+2020-02-21 09:31:40 INFO  root:83 - bjohn logged in
+2020-02-21 09:37:56 INFO  root:73 - kstra logged in
+2020-02-21 09:38:34 INFO  root:83 - bjohn logged in
+2020-02-21 09:38:55 INFO  root:27 - Database was serialized
+2020-02-21 09:43:53 INFO  root:58 - Database was deserialized
+2020-02-21 09:44:03 INFO  root:58 - Database was deserialized
+2020-02-21 09:44:43 INFO  root:73 - Kstra logged in
+2020-02-21 09:49:38 INFO  root:58 - Database was deserialized
+2020-02-21 09:53:19 INFO  root:58 - Database was deserialized
+2020-02-21 09:53:33 INFO  root:73 - lSKy logged in
+2020-02-21 09:53:53 INFO  root:162 - LSky made an offer on Car [ 1977 Incom Corporation T-65 X-wing starfighter miles=20000 $25000.0 VIN=144931]
+2020-02-21 09:54:41 INFO  root:27 - Database was serialized
+2020-02-21 09:54:51 INFO  root:58 - Database was deserialized
+2020-02-21 09:54:54 INFO  root:27 - Database was serialized
+2020-02-21 10:19:47 INFO  root:58 - Database was deserialized
+2020-02-21 10:20:46 INFO  root:118 - Customer [firstName=Darth, lastName=Malgus, username=DMal, myCars=[]] created
+2020-02-21 10:21:20 INFO  root:162 - DMal made an offer on Car [ 1983 Sienar Fleet Systems  Tie Fighter miles=150000 $45000.0 VIN=51194]
+2020-02-21 10:21:37 INFO  root:83 - Bjohn logged in
+2020-02-21 10:22:16 INFO  root:176 - Car [ 1983 Sienar Fleet Systems  Tie Fighter miles=150000 $20000.0 VIN=51194] was sold to customer Customer [firstName=Darth, lastName=Malgus, username=DMal, myCars=[Car [ 1983 Sienar Fleet Systems  Tie Fighter miles=150000 $20000.0 VIN=51194]]]
+2020-02-21 10:23:23 INFO  root:224 - Car [ 2002 Toyota X-wing miles=25000 $1.0E7 VIN=561878] was created by BJohn
+2020-02-21 10:23:55 INFO  root:58 - Database was deserialized
+2020-02-21 10:24:03 INFO  root:73 - Kstra logged in
+2020-02-21 10:24:19 INFO  root:162 - KStra made an offer on Car [ 1977 Incom Corporation T-65 X-wing starfighter miles=20000 $25000.0 VIN=144931]
+2020-02-21 10:24:42 INFO  root:27 - Database was serialized
+2020-02-21 10:30:42 INFO  root:176 - Car [ 2002 Ford Focus miles=102500 $9000.0 VIN=541285] was sold to customer Customer [firstName=David, lastName=Malcom, username=DMal, myCars=[Car [ 2002 Ford Focus miles=102500 $9000.0 VIN=541285]]]
+2020-02-21 10:30:42 INFO  root:224 - Car [ Ford Focus 1528546 miles=2001 $10000.0 VIN=541285] was created by TBank
+2020-02-21 10:30:42 INFO  root:188 - Offers were removed for user DMal
+2020-02-21 10:30:56 INFO  root:58 - Database was deserialized
+2020-02-21 10:31:08 INFO  root:83 - Bjohn logged in
+2020-02-21 10:31:38 INFO  root:224 - Car [ 2020 Toyota Xwing miles=25002 $25000.0 VIN=65181] was created by BJohn
+2020-02-21 10:31:51 INFO  root:237 - Car [ 2020 Toyota Xwing miles=25002 $25000.0 VIN=65181] was removed by employee BJohn
+2020-02-21 10:32:09 INFO  root:27 - Database was serialized
+2020-02-21 10:32:56 INFO  root:58 - Database was deserialized
+2020-02-21 18:02:47 INFO  root:58 - Database was deserialized
+2020-02-21 18:03:02 INFO  root:73 - kstra logged in
+2020-02-22 11:17:17 INFO  root:58 - Database was deserialized
+2020-02-22 11:17:35 INFO  root:73 - Kstra logged in
+2020-02-22 11:18:17 INFO  root:162 - KStra made an offer on Car [ 2002 Corellian Engineering Corporation  YT-1300 Corellian light freighter miles=25000000 $500000.0 VIN=982248]
+2020-02-22 11:19:07 INFO  root:83 - bjohn logged in
+2020-02-22 11:19:32 INFO  root:176 - Car [ 2002 Corellian Engineering Corporation  YT-1300 Corellian light freighter miles=25000000 $50000.0 VIN=982248] was sold to customer Customer [firstName=Kenneth, lastName=Stratton, username=KStra, myCars=[Car [ 1999 Radon-Ulzer Repulsorlift Custom Built Podracer miles=25000 $90000.0 VIN=156688], Car [ 2002 Corellian Engineering Corporation  YT-1300 Corellian light freighter miles=25000000 $50000.0 VIN=982248]]]
+2020-02-22 11:20:36 INFO  root:27 - Database was serialized
+2020-02-22 11:23:50 INFO  root:58 - Database was deserialized
+2020-02-22 11:24:05 INFO  root:77 - Sorry, your information was incorrect
+2020-02-22 11:24:30 INFO  root:77 - Sorry, your information was incorrect
+2020-02-22 11:25:56 INFO  root:58 - Database was deserialized
+2020-02-22 11:26:11 INFO  root:78 - Sorry, your information was incorrect
+2020-02-22 11:26:26 INFO  root:74 - dsmi logged in
+2020-02-22 11:27:02 INFO  root:74 - lsky logged in
+2020-02-22 11:27:09 INFO  root:27 - Database was serialized
