@@ -96,9 +96,10 @@ public class Employee implements Serializable {
 				break;
 			case "2":
 				for (Car c : fleet.getFleet()) {
-					if (!c.getOffers().isEmpty()) {
-						c.toStringOffer();
-					}
+					// TODO fix this
+//					if (!c.getOffers().isEmpty()) {
+//						c.toStringOffer();
+//					}
 				}
 				System.out.println();
 				EmployeeOptions();
@@ -163,32 +164,34 @@ public class Employee implements Serializable {
 		username = input.nextLine();
 		switch (option) {
 		case "1":
-			for (Car c : fleet.getFleet()) {
-				if (c.getVIN().equals(vin)) {
-					for (Customer cus : users.getCustomers()) {
-						if (cus.getUsername().equalsIgnoreCase(username)) {
-							c.setSold(true);
-							c.setPrice(c.getOffers().get(username));
-							cus.setMyCars(c);
-//							c.setOwner(cus);
-							c.getOffers().clear();
-							fleet.removeCar(c);
-							log.info(c.toString() + " was sold to customer " + cus.toString());
-							return fleet;
-						}
-					}
-				}
-			}
+			// TODO fix this
+//			for (Car c : fleet.getFleet()) {
+//				if (c.getVIN().equals(vin)) {
+//					for (Customer cus : users.getCustomers()) {
+//						if (cus.getUsername().equalsIgnoreCase(username)) {
+//							c.setSold(true);
+//							c.setPrice(c.getOffers().get(username));
+//							cus.setMyCars(c);
+////							c.setOwner(cus);
+//							c.getOffers().clear();
+//							fleet.removeCar(c);
+//							log.info(c.toString() + " was sold to customer " + cus.toString());
+//							return fleet;
+//						}
+//					}
+//				}
+//			}
 			System.out.println("There is no vehicle with VIN " + vin);
 			return fleet;
 		case "2":
-			for (Car c : fleet.getFleet()) {
-				if (c.getOffers().containsKey(username)) {
-					c.getOffers().remove(username);
-					log.info("Offers were removed for user " + username);
-				}
-			}
-			return fleet;
+			// TODO fix this
+//			for (Car c : fleet.getFleet()) {
+//				if (c.getOffers().containsKey(username)) {
+//					c.getOffers().remove(username);
+//					log.info("Offers were removed for user " + username);
+//				}
+//			}
+//			return fleet;
 		case "3":
 			break;
 		default:

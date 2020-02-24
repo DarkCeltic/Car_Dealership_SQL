@@ -15,7 +15,7 @@ public class Customer implements Serializable {
 	private static Logger log = Logger.getRootLogger();
 	Fleet fleet = new Fleet();
 	ArrayList<Car> allCars = new ArrayList<>();
-	CarDAOImpl getOwnerCars = new CarDAOImpl();
+	CarDAOImpl carDatabase = new CarDAOImpl();
 	/**
 	 * 
 	 */
@@ -82,9 +82,9 @@ public class Customer implements Serializable {
 	}
 
 	@Override
+	// TODO fix this to look nicer
 	public String toString() {
-		return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", myCars="
-				+ myCars + "]";
+		return "FirstName=" + firstName + ", lastName=" + lastName + ", username=" + username;
 	}
 
 	public void CustomerOptions() {
@@ -102,10 +102,14 @@ public class Customer implements Serializable {
 
 	public void customerDecision(String option) {
 		Scanner input = new Scanner(System.in);
+		// This gets an array list from the Fleet class which
+		// gets all the cars from the database where the owner is null
 		allCars = fleet.getFleet();
+		myCars = carDatabase.selectCarByOwner(this.username);
 		switch (option) {
 		case "1":
 			// TODO make sysout look cleaner
+			System.out.println("Year\t\tMake\t\tModel\t\tPrice\t\tVIN");
 			for (Car c : allCars) {
 				if (c.getOwner() == null) {
 					System.out.println(c);
@@ -120,24 +124,25 @@ public class Customer implements Serializable {
 			CustomerOptions();
 			break;
 		case "3":
-			// TODO make sysout look cleaner
-			for (Car c : getOwnerCars.selectCarByOwner(this.username))
+			// TODO make sysout look cleaner; make sure this implementation works
 			if (myCars.isEmpty()) {
 				System.out.println("You do not own any vehicles yet.");
 			} else {
+				System.out.println("Year\t\tMake\t\tModel\t\tPrice\t\tVIN");
 				System.out.println(myCars.toString());
 				System.out.println();
 			}
 			CustomerOptions();
 			break;
 		case "4":
-			// TODO make sysout look cleaner
 			if (myCars.isEmpty()) {
 				System.out.println("You have not purchased any vehicles yet");
 			} else {
+				System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tMonthly Payments");
 				for (Car c : myCars) {
-					System.out.println(
-							"You have " + " payments of $" + c.getMonthlyPayments() + "left on " + c.toString());
+					String formatedPrice = String.format("%.2f", c.getMonthlyPayments());
+					System.out.format("%4s%20s%18s%10s%25s", c.getYear(), c.getMake(), c.getModel(), c.getVIN(),
+							"$" + formatedPrice + " X 60");
 				}
 			}
 			System.out.println();
@@ -154,6 +159,8 @@ public class Customer implements Serializable {
 		}
 	}
 
+	// TODO Make sure this works correctly, it should not allow a customer to submit
+	// another offer on the same vehicle
 	public void bid() {
 		Scanner input = new Scanner(System.in);
 		String carVIN;
@@ -164,8 +171,7 @@ public class Customer implements Serializable {
 		offerPrice = Double.parseDouble(input.nextLine());
 		for (Car c : allCars) {
 			if (c.getVIN().equals(carVIN)) {
-
-//				c.getOffers().put(this.username, offerPrice);
+				carDatabase.insertOffers(this.username, carVIN, offerPrice);
 				log.info(this.username + " made an offer on " + c.toString());
 				break;
 			}

@@ -191,10 +191,9 @@ public class Car implements Serializable {
 		return true;
 	}
 
-	@Override
 	public String toString() {
-		// TODO change this to look cleaner/neater
-		return "Car [ " + year + " " + make + " " + model + " miles=" + " $" + price + " VIN=" + VIN + "]";
+		String formatedPrice = String.format("%.2f", price);
+		return String.format("%4s%20s%18s%15s%12s", year, make, model, "$"+formatedPrice, VIN);
 	}
 //TODO change this to add SQL database offers
 //	public void toStringOffer() {

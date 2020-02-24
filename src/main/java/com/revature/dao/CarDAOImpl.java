@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 
 import com.revature.pojo.Car;
 
@@ -21,22 +20,20 @@ public class CarDAOImpl implements CarDAO {
 		// TODO Auto-generated method stub
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO Cars VALUES(?,?,?,?)");
+
 			ps.setString(1, c.getMake());
-			// we are setting the first question mark to be the name that belongs to our pet
-			// object
 			ps.setString(2, c.getModel());
 			ps.setString(3, c.getYear());
 			ps.setDouble(4, c.getPrice());
-			// we are setting the second question mark to be the type that belongs to our
-			// pet object
 			ps.execute();
-			// allows us to execute a query
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
 
+	// TODO not sure if this is needed yet
 	@Override
 	public Car selectCarByVin(String vin) {
 		Car car = null;
@@ -74,11 +71,11 @@ public class CarDAOImpl implements CarDAO {
 	}
 
 	@Override
-	public ArrayList<Car> selectCarByOwner(String username) {
+	public ArrayList<Car> selectCarByOwner(String ownerUsername) {
 		ArrayList<Car> car = new ArrayList<Car>();
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cars WHERE owner=?");
-			ps.setString(1, username);
+			ps.setString(1, ownerUsername);
 
 			ResultSet rs = ps.executeQuery();
 
@@ -94,10 +91,10 @@ public class CarDAOImpl implements CarDAO {
 	}
 
 	@Override
-	public void updateCarOwner(String username, String vin) {
+	public void updateCarOwner(String ownerUsername, String vin) {
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("UPDATE Cars SET owner=? WHERE vin=?");
-			ps.setString(1, username);
+			ps.setString(1, ownerUsername);
 			ps.setString(2, vin);
 			ps.executeUpdate();
 
@@ -124,33 +121,18 @@ public class CarDAOImpl implements CarDAO {
 		}
 	}
 
-//	@Override
-//	public void insertOffers(String username, String vin, double amount) {
-//		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-//			PreparedStatement ps = conn.prepareStatement("INSERT INTO offers VALUES(?,?,?,?)");
-//			ps.setString(1, vin);
-//			ps.setString(3, username);
-//			ps.setDouble(4, amount);
-//			ps.setBoolean(5, false);
-//			ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 	@Override
-	public void insertOffers(String username, String vin, double amount) {
+	public void insertOffers(String customerUsername, String vin, double amount) {
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM offers WHERE username= ? AND vin=?");
-			ps.setString(1, username);
+			ps.setString(1, customerUsername);
 			ps.setString(2, vin);
 			ResultSet result = ps.executeQuery();
-			
+
 			if (!result.next()) {
 				ps = conn.prepareStatement("INSERT INTO offers(vin, username, amount, active) VALUES(?,?,?,?)");
 				ps.setString(1, vin);
-				ps.setString(2, username);
+				ps.setString(2, customerUsername);
 				ps.setDouble(3, amount);
 				ps.setBoolean(4, false);
 				ps.executeUpdate();

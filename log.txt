@@ -145,3 +145,4 @@
 2020-02-23 14:20:31 INFO  root:87 - Sorry, your information was incorrect
 2020-02-23 14:50:11 INFO  root:136 - Ksmi profile created
 2020-02-23 14:51:14 INFO  root:136 - Ksmi profile created
+2020-02-23 22:54:42 INFO  root:79 - The username you provided does not exist

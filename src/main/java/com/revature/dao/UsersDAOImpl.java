@@ -30,15 +30,14 @@ public class UsersDAOImpl implements UsersDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
-	public Customer selectCustomerByUsername(String username) {
+	public Customer selectCustomerByUsername(String customerUsername) {
 		Customer customer = null;
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("SELECT* FROM users WHERE username=?");
-			ps.setString(1, username);
+			ps.setString(1, customerUsername);
 
 			ResultSet rs = ps.executeQuery();
 
@@ -70,11 +69,11 @@ public class UsersDAOImpl implements UsersDAO {
 	}
 
 	@Override
-	public Employee selectEmployeeByUsername(String username) {
+	public Employee selectEmployeeByUsername(String emplyeeUsername) {
 		Employee employee = null;
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
 			PreparedStatement ps = conn.prepareStatement("SELECT* FROM users WHERE username=?");
-			ps.setString(1, username);
+			ps.setString(1, emplyeeUsername);
 
 			ResultSet rs = ps.executeQuery();
 
