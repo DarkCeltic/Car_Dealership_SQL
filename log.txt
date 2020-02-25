@@ -171,3 +171,6 @@
 2020-02-25 00:08:29 INFO  root:136 - Dbow profile created
 2020-02-25 00:09:35 INFO  root:136 - Dbow profile created
 2020-02-25 15:16:33 INFO  root:161 - Your bid for 1980 Kuat Drive Yards Star Destroyer was submitted
+2020-02-25 16:31:30 INFO  root:136 - Bhop profile created
+2020-02-25 16:34:11 INFO  root:161 - Your bid for 2002 Corellian Corp YT-1300 was submitted
+2020-02-25 16:39:16 INFO  root:97 - The username you provided does not exist

@@ -12,7 +12,7 @@ import com.revature.users.Customer;
 import com.revature.users.Employee;
 
 public class UsersDAOImpl implements UsersDAO {
-	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership_Test";
+	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership";
 	private static String username = "postgres";
 	private static String password = "postgres";
 

@@ -105,7 +105,6 @@ public class Employee {
 			if (temp.isEmpty()) {
 				System.out.println("There are no offers yet!");
 			} else {
-				// TODO check to make sure that this works
 				String[] username = new String[10];
 				String[] vin = new String[10];
 				Double[] amount = new Double[10];
@@ -120,13 +119,14 @@ public class Employee {
 				System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tUsername\t\tOffer");
 				for (Car c : allCars) {
 					for (i = 0; i < username.length; i++) {
+//						System.out.println("Car vin:"+c.getVIN()+" stored vin:"+vin[i]);
 						if (vin[i] == null) {
 							break;
 						} else {
 							if (vin[i].equals(c.getVIN())) {
 								String price = String.format("%.2f", amount[i]);
-								System.out.format("%4s%20s%18s%12s%15s%251s", c.getYear(), c.getMake(), c.getModel(),
-										vin[i], username[i], "$" + price);
+								System.out.format("%4s%20s%18s%12s%15s%25s", c.getYear(), c.getMake(), c.getModel(),
+										vin[i], username[i], "$" + price + "\n");
 							}
 						}
 					}
@@ -155,7 +155,6 @@ public class Employee {
 			employeeOptions();
 			break;
 		case "6":
-			// TODO
 			System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tOwner\t\tMonthly Payment");
 			for (Car c : ownedCars) {
 				String formatedPrice = String.format("%,.2f", c.getMonthlyPayments());
@@ -205,7 +204,6 @@ public class Employee {
 		}
 	}
 
-	// TODO Fix this for SQL
 	public void addVehicle() {
 		Scanner input = new Scanner(System.in);
 		double price;
@@ -224,7 +222,6 @@ public class Employee {
 				+ this.username);
 	}
 
-	// TODO fix this for SQL
 	public void removeVehicle() {
 		Scanner input = new Scanner(System.in);
 		String vin;

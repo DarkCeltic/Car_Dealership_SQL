@@ -12,7 +12,7 @@ import com.revature.pojo.Car;
 
 public class CarDAOImpl implements CarDAO {
 
-	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership_Test";
+	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership";
 	private static String username = "postgres";
 	private static String password = "postgres";
 
@@ -43,27 +43,6 @@ public class CarDAOImpl implements CarDAO {
 			e.printStackTrace();
 		}
 	}
-
-	// TODO not sure if this is needed yet
-//	@Override
-//	public Car selectCarByVin(String vin) {
-//		Car car = null;
-//		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-//			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cars WHERE vin=?");
-//			ps.setString(1, vin);
-//
-//			ResultSet rs = ps.executeQuery();
-//
-//			while (rs.next()) {
-//				car = new Car(rs.getDouble("price"), rs.getString("vin"), rs.getString("make"), rs.getString("model"),
-//						rs.getString("year"));
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return car;
-//	}
 
 	@Override
 	public ArrayList<Car> selectAllCars() {
@@ -118,36 +97,37 @@ public class CarDAOImpl implements CarDAO {
 		}
 		return car;
 	}
-//THis is no longer needed
-//	@Override
-//	public void updateCarOwner(String ownerUsername, String vin, Double amount) {
-//		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-//			PreparedStatement ps = conn.prepareStatement("UPDATE Cars SET owner=?, price=? WHERE vin=?");
-//			ps.setString(1, ownerUsername);
-//			ps.setDouble(2, amount);
-//			ps.setString(3, vin);
-//			ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// THis is was overridded by the stored procedure
+	// @Override
+	// public void updateCarOwner(String ownerUsername, String vin, Double amount) {
+	// try (Connection conn = DriverManager.getConnection(url, username, password))
+	// {
+	// PreparedStatement ps = conn.prepareStatement("UPDATE Cars SET owner=?,
+	// price=? WHERE vin=?");
+	// ps.setString(1, ownerUsername);
+	// ps.setDouble(2, amount);
+	// ps.setString(3, vin);
+	// ps.executeUpdate();
+	//
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	@Override
 	public ArrayList<String> getAllOffers() {
+		ArrayList<String> tempArray = new ArrayList<>();
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT vin, username, amount FROM offers");
+			PreparedStatement ps = conn.prepareStatement("SELECT vin, username, amount FROM offers WHERE active=true");
 			ResultSet results = ps.executeQuery();
 			while (results.next()) {
 				String vin = results.getString("vin");
 				String username = results.getString("username");
 				Double amount = results.getDouble("amount");
-				ArrayList<String> tempArray = new ArrayList<>();
 				String temp = vin + " " + username + " " + amount;
 				tempArray.add(temp);
-				return tempArray;
 			}
-
+			return tempArray;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
