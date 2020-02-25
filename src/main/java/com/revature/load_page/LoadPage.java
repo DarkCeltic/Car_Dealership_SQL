@@ -88,7 +88,7 @@ public class LoadPage {
 			for (Employee e : emp) {
 				if (e.getUsername().equals(username)) {
 					if (e.getPassword().equals(password)) {
-						e.EmployeeOptions();
+						e.employeeOptions();
 					} else {
 						log.info("The password you provided was incorrect");
 						login();

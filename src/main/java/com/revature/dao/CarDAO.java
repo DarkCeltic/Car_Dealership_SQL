@@ -9,18 +9,28 @@ public interface CarDAO {
 	// Add a Car
 	public void insertCar(Car c);
 
+	public void removeCar(String vin);
+
 	// Find a Car by the VIN
 	public Car selectCarByVin(String vin);
 
 	// Return all of the Cars
 	public ArrayList<Car> selectAllCars();
 
-	public ArrayList<Car> selectCarByOwner(String username);
+	public ArrayList<Car> selectCarByOwner(String customerUsername);
 
-	void updateCarOwner(String username, String vin);
+	void updateCarOwner(String customerUsername, String vin, Double amount);
 
-	public void getAllOffers();
+	public ArrayList<String> getAllOffers();
 
-	void insertOffers(String username, String vin, double amount);
+	public void insertOffers(String customerUsername, String vin, double amount);
+
+	public void removeOffer(String customerUsername, String vin);
+
+	public void acceptOffer(String vin);
+
+	public Double getOfferAmount(String customerUsername, String vin);
+
+	public ArrayList<Car> selectAllOwnedCars();
 
 }

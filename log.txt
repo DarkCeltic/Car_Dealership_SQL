@@ -146,3 +146,23 @@
 2020-02-23 14:50:11 INFO  root:136 - Ksmi profile created
 2020-02-23 14:51:14 INFO  root:136 - Ksmi profile created
 2020-02-23 22:54:42 INFO  root:79 - The username you provided does not exist
+2020-02-24 14:32:52 INFO  root:175 - Kstra made an offer on 1977   Incom Corporation       T-65 X-wing      $25000.00       71071
+2020-02-24 14:39:52 INFO  root:175 - Kstra made an offer on 1977   Incom Corporation       T-65 X-wing      $25000.00       71071
+2020-02-24 14:42:10 INFO  root:175 - Kstra made an offer on 1977   Incom Corporation       T-65 X-wing      $25000.00       71071
+2020-02-24 21:42:27 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:42:56 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:43:09 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:43:22 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:47:36 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:47:54 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:48:04 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:52:16 INFO  root:97 - The username you provided does not exist
+2020-02-24 21:53:16 INFO  root:97 - The username you provided does not exist
+2020-02-24 22:01:56 INFO  root:97 - The username you provided does not exist
+2020-02-24 22:25:00 INFO  root:255 - 1999                Ford              F15035000.0 was created by Bjoh
+2020-02-24 22:27:36 INFO  root:97 - The username you provided does not exist
+2020-02-24 22:28:05 INFO  root:255 - 1999                Ford              F15015000.0 was created by Bjoh
+2020-02-24 22:29:31 INFO  root:268 - 1999                Ford              F150      $15000.00       41193 was removed by employee Bjoh
+2020-02-24 22:31:03 INFO  root:268 - 1999                Ford              F150      $15000.00       41193 was removed by employee Bjoh
+2020-02-24 22:36:48 INFO  root:255 - 1999 Ford F150 10000.0 was created by Bjoh
+2020-02-24 22:37:22 INFO  root:269 - 1999 Ford F150  was removed by employee Bjoh

@@ -56,7 +56,7 @@ public class UsersDAOImpl implements UsersDAO {
 	public ArrayList<Customer> selectAllCustomers() {
 		ArrayList<Customer> customer = new ArrayList<Customer>();
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT* FROM users");
+			PreparedStatement ps = conn.prepareStatement("SELECT* FROM users WHERE userid=1");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				customer.add(new Customer(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
@@ -92,16 +92,15 @@ public class UsersDAOImpl implements UsersDAO {
 	public ArrayList<Employee> selectAllEmployees() {
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT* FROM users");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE userid=2");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				employees.add(new Employee(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
-						rs.getString("password")));
+				employees.add(new Employee(rs.getString("firstname"), rs.getString("lastname"),
+						rs.getString("username"), rs.getString("password")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return employees;
 	}
-
 }

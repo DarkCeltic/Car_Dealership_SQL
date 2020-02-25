@@ -26,9 +26,6 @@ public class Customer implements Serializable {
 	private String password;
 	private ArrayList<Car> myCars = new ArrayList<Car>();
 
-//	public public Customer() {
-//		super();
-//	}
 	public Customer() {
 		super();
 	}
@@ -82,7 +79,6 @@ public class Customer implements Serializable {
 	}
 
 	@Override
-	// TODO fix this to look nicer
 	public String toString() {
 		return "FirstName=" + firstName + ", lastName=" + lastName + ", username=" + username;
 	}
@@ -108,7 +104,6 @@ public class Customer implements Serializable {
 		myCars = carDatabase.selectCarByOwner(this.username);
 		switch (option) {
 		case "1":
-			// TODO make sysout look cleaner
 			System.out.println("Year\t\tMake\t\tModel\t\tPrice\t\tVIN");
 			for (Car c : allCars) {
 				if (c.getOwner() == null) {
@@ -124,7 +119,6 @@ public class Customer implements Serializable {
 			CustomerOptions();
 			break;
 		case "3":
-			// TODO make sysout look cleaner; make sure this implementation works
 			if (myCars.isEmpty()) {
 				System.out.println("You do not own any vehicles yet.");
 			} else {
@@ -140,7 +134,7 @@ public class Customer implements Serializable {
 			} else {
 				System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tMonthly Payments");
 				for (Car c : myCars) {
-					String formatedPrice = String.format("%.2f", c.getMonthlyPayments());
+					String formatedPrice = String.format("%,.2f", c.getMonthlyPayments());
 					System.out.format("%4s%20s%18s%10s%25s", c.getYear(), c.getMake(), c.getModel(), c.getVIN(),
 							"$" + formatedPrice + " X 60");
 				}
@@ -159,8 +153,6 @@ public class Customer implements Serializable {
 		}
 	}
 
-	// TODO Make sure this works correctly, it should not allow a customer to submit
-	// another offer on the same vehicle
 	public void bid() {
 		Scanner input = new Scanner(System.in);
 		String carVIN;
@@ -171,8 +163,8 @@ public class Customer implements Serializable {
 		offerPrice = Double.parseDouble(input.nextLine());
 		for (Car c : allCars) {
 			if (c.getVIN().equals(carVIN)) {
+				System.out.print(this.username);
 				carDatabase.insertOffers(this.username, carVIN, offerPrice);
-				log.info(this.username + " made an offer on " + c.toString());
 				break;
 			}
 		}

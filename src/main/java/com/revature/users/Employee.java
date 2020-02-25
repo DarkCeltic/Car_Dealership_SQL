@@ -1,17 +1,22 @@
 package com.revature.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.revature.dao.CarDAOImpl;
 import com.revature.load_page.LoadPage;
 import com.revature.pojo.Car;
 import com.revature.pojo.Fleet;
-import com.revature.pojo.Users;
 
 public class Employee implements Serializable {
 	private static Logger log = Logger.getRootLogger();
+	Fleet fleet = new Fleet();
+	ArrayList<Car> allCars = new ArrayList<>();
+	CarDAOImpl carDatabase = new CarDAOImpl();
+	ArrayList<Car> ownedCars = new ArrayList<>();
 	/**
 	 * 
 	 */
@@ -70,7 +75,9 @@ public class Employee implements Serializable {
 		this.password = password;
 	}
 
-	public void EmployeeOptions() {
+	public void employeeOptions() {
+		Scanner input = new Scanner(System.in);
+		String option;
 		System.out.println("Welcome " + this.firstName + " to your account.");
 		System.out.println("Type 1 to see a list of vehicles");
 		System.out.println("Type 2 to see offers for vehicles");
@@ -79,83 +86,101 @@ public class Employee implements Serializable {
 		System.out.println("Type 5 to remove a vehicle");
 		System.out.println("Type 6 to view all payments");
 		System.out.println("Type 7 to return to the login page.");
+		option = input.nextLine();
+		employeeDecision(option);
 	}
 
-	public void employeeDecision(Users users, Fleet fleet) {
+	public void employeeDecision(String option) {
+		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
-		EmployeeOptions();
-		String option = input.nextLine();
-		while (!option.equals("7")) {
-			switch (option) {
-			case "1":
-				for (Car c : fleet.getFleet()) {
+		allCars = fleet.getFleet();
+		ownedCars = carDatabase.selectAllOwnedCars();
+		switch (option) {
+		case "1":
+			System.out.println("Year\t\tMake\t\tModel\t\tPrice\t\tVIN");
+			for (Car c : allCars) {
+				if (c.getOwner() == null) {
 					System.out.println(c);
 				}
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			case "2":
-				for (Car c : fleet.getFleet()) {
-					// TODO fix this
-//					if (!c.getOffers().isEmpty()) {
-//						c.toStringOffer();
-//					}
+			}
+			employeeOptions();
+			option = input.nextLine();
+			break;
+		case "2":
+			ArrayList<String> temp = carDatabase.getAllOffers();
+			if (temp.isEmpty()) {
+				System.out.println("There are no offers yet!");
+			} else {
+				// TODO check to make sure that this works
+				String[] username = new String[10];
+				String[] vin = new String[10];
+				Double[] amount = new Double[10];
+				int i = 0;
+				for (String s : temp) {
+					String[] temps = s.split(" ");
+					username[i] = temps[1];
+					vin[i] = temps[0];
+					amount[i] = Double.parseDouble(temps[2]);
+					i++;
 				}
-				System.out.println();
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			case "3":
-				System.out.println("To accept an offer Type 1");
-				System.out.println("To reject an offer Type 2");
-				System.out.println("To retrun to the previous menu Type 3");
-				option = input.nextLine();
-				fleet = acceptOrRejectoffer(option, users, fleet);
-				System.out.println();
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			case "4":
-				addVehicle(users, fleet);
-				System.out.println();
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			case "5":
-				fleet = removeVehicle(users, fleet);
-				System.out.println();
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			case "6":
-				for (Customer e : users.getCustomers()) {
-					if (!e.getMyCars().isEmpty()) {
-						for (Car c : e.getMyCars()) {
-							System.out.println(e.getUsername() + " has " + " Monthly Payments of: $"
-									+ c.getMonthlyPayments() + " left");
+				System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tUsername\t\tOffer");
+				for (Car c : allCars) {
+					for (i = 0; i < username.length; i++) {
+						if (vin[i] == null) {
+							break;
+						} else {
+							if (vin[i].equals(c.getVIN())) {
+								String price = String.format("%.2f", amount[i]);
+								System.out.format("%4s%20s%18s%12s%15s%251s", c.getYear(), c.getMake(), c.getModel(),
+										vin[i], username[i], "$" + price);
+							}
 						}
 					}
-
-//				for (Car c : fleet.getFleet()) {
-//					System.out.println(c.isSold());
-//					if (c.isSold() == true) {
-//						System.out.println(c.getOwner() +" has "+ c.getRemainingPayments()+" Monthly Payments of: $" + c.getMonthlyPayments());
-//					}
 				}
-				System.out.println();
-				EmployeeOptions();
-				option = input.nextLine();
-				break;
-			default:
-				System.out.println("That is not a valid option, please select again");
-				break;
 			}
+			System.out.println();
+			employeeOptions();
+			break;
+		case "3":
+			System.out.println("To accept an offer Type 1");
+			System.out.println("To reject an offer Type 2");
+			System.out.println("To retrun to the previous menu Type 3");
+			option = input.nextLine();
+			acceptOrRejectoffer(option);
+			System.out.println();
+			employeeOptions();
+			break;
+		case "4":
+			addVehicle();
+			System.out.println();
+			employeeOptions();
+			break;
+		case "5":
+			removeVehicle();
+			System.out.println();
+			employeeOptions();
+			break;
+		case "6":
+			// TODO
+			System.out.println("Year\t\tMake\t\tModel\t\tVIN\t\tOwner\t\tMonthly Payment");
+			for (Car c : ownedCars) {
+				String formatedPrice = String.format("%,.2f", c.getMonthlyPayments());
+				System.out.format("%4s%20s%18s%10s%15s%25s", c.getYear(), c.getMake(), c.getModel(), c.getVIN(),
+						c.getOwner(), "$" + formatedPrice + " X 60");
+			}
+			System.out.println();
+			employeeOptions();
+			break;
+		case "7":
+			LoadPage login = new LoadPage();
+			login.loginPage();
+		default:
+			System.out.println("That is not a valid option, please select again");
+			break;
 		}
-		LoadPage login = new LoadPage();
-//		login.loginPage(users, fleet);
 	}
 
-	public Fleet acceptOrRejectoffer(String option, Users users, Fleet fleet) {
+	public void acceptOrRejectoffer(String option) {
 		Scanner input = new Scanner(System.in);
 		String vin, username;
 		System.out.println("What is the VIN of the vehicle offer");
@@ -164,84 +189,60 @@ public class Employee implements Serializable {
 		username = input.nextLine();
 		switch (option) {
 		case "1":
-			// TODO fix this
-//			for (Car c : fleet.getFleet()) {
-//				if (c.getVIN().equals(vin)) {
-//					for (Customer cus : users.getCustomers()) {
-//						if (cus.getUsername().equalsIgnoreCase(username)) {
-//							c.setSold(true);
-//							c.setPrice(c.getOffers().get(username));
-//							cus.setMyCars(c);
-////							c.setOwner(cus);
-//							c.getOffers().clear();
-//							fleet.removeCar(c);
-//							log.info(c.toString() + " was sold to customer " + cus.toString());
-//							return fleet;
-//						}
-//					}
-//				}
-//			}
-			System.out.println("There is no vehicle with VIN " + vin);
-			return fleet;
+			carDatabase.acceptOffer(vin);
+			Double amount = carDatabase.getOfferAmount(username, vin);
+			carDatabase.updateCarOwner(username, vin, amount);
+			System.out.println("Year\t\tMake\t\tModel\t\tVIN");
+			for (Car c : allCars) {
+				if (c.getVIN().equals(vin)) {
+					String price = String.format("%,.2f", amount);
+					log.info(String.format("%4s%20s%18s%10s", c.getYear(), c.getMake(), c.getModel(), c.getVIN())
+							+ " was sold to customer " + username + " for $" + price);
+				}
+			}
+			employeeOptions();
 		case "2":
-			// TODO fix this
-//			for (Car c : fleet.getFleet()) {
-//				if (c.getOffers().containsKey(username)) {
-//					c.getOffers().remove(username);
-//					log.info("Offers were removed for user " + username);
-//				}
-//			}
-//			return fleet;
+			carDatabase.removeOffer(username, vin);
+			employeeOptions();
 		case "3":
 			break;
 		default:
 			System.out.println("That is not a valid option, please try again");
 			break;
 		}
-		return fleet;
 	}
 
-	public Fleet addVehicle(Users users, Fleet fleet) {
+	// TODO Fix this for SQL
+	public void addVehicle() {
 		Scanner input = new Scanner(System.in);
 		double price;
-		String vIN, make, model, mileage, year;
-		System.out.println("Please enter the VIN of the vehicle.");
-		vIN = input.nextLine();
-		for (Car c : fleet.getFleet()) {
-			if (c.getVIN().equals(vIN)) {
-				System.out.println("There is already a vehicle with this VIN, please try again");
-			}
-		}
+		String make, model, year;
 		System.out.println("Please enter the Year of the vehicle.");
 		year = input.nextLine();
 		System.out.println("Please enter the Make of the vehicle.");
 		make = input.nextLine();
 		System.out.println("Please enter the Model of the vehicle.");
 		model = input.nextLine();
-		System.out.println("Please enter the Mileage of the vehicle.");
-		mileage = input.nextLine();
 		System.out.println("Please enter the Price of the vehicle.");
 		price = Double.parseDouble(input.nextLine());
-		Car c = new Car(price, vIN, make, model, year);
-		fleet.setFleet(c);
-		log.info(c.toString() + " was created by " + this.username);
-		return fleet;
-
+		Car c = new Car(price, make, model, year);
+		carDatabase.insertCar(c);
+		log.info(c.getYear() + " " + c.getMake() + " " + c.getModel() + " " + "$" + c.getPrice() + " was created by "
+				+ this.username);
 	}
 
-	public Fleet removeVehicle(Users users, Fleet fleet) {
+	// TODO fix this for SQL
+	public void removeVehicle() {
 		Scanner input = new Scanner(System.in);
 		String vin;
 		System.out.println("Please enter the VIN of the vehicle you would like to remove");
 		vin = input.nextLine();
-		for (Car c : fleet.getFleet()) {
+		carDatabase.removeCar(vin);
+		for (Car c : allCars) {
 			if (c.getVIN().equals(vin)) {
-				fleet.removeCar(c);
-				log.info(c.toString() + " was removed by employee " + this.username);
-				return fleet;
+				log.info(c.getYear() + " " + c.getMake() + " " + c.getModel() + " " + c.getVIN()
+						+ " was removed by employee " + this.username);
 			}
 		}
-		System.out.println("The car with VIN " + vin + " was not found");
-		return fleet;
 	}
 }

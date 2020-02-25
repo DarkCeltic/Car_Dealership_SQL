@@ -38,6 +38,16 @@ public class Car implements Serializable {
 		this.model = model;
 		this.year = year;
 	}
+	
+	public Car(double price, String owner, String vIN, String make, String model, String year) {
+		super();
+		this.price = price;
+		this.owner = owner;
+		VIN = vIN;
+		this.make = make;
+		this.model = model;
+		this.year = year;
+	}
 
 //	public boolean isSold() {
 //		return sold;
@@ -192,7 +202,7 @@ public class Car implements Serializable {
 	}
 
 	public String toString() {
-		String formatedPrice = String.format("%.2f", price);
+		String formatedPrice = String.format("%,.2f", price);
 		return String.format("%4s%20s%18s%15s%12s", year, make, model, "$"+formatedPrice, VIN);
 	}
 //TODO change this to add SQL database offers
