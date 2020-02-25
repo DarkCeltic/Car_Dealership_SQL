@@ -1,6 +1,5 @@
 package com.revature.users;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,18 +8,13 @@ import org.apache.log4j.Logger;
 import com.revature.dao.CarDAOImpl;
 import com.revature.load_page.LoadPage;
 import com.revature.pojo.Car;
-import com.revature.pojo.Fleet;
 
-public class Employee implements Serializable {
+public class Employee {
 	private static Logger log = Logger.getRootLogger();
-	Fleet fleet = new Fleet();
 	ArrayList<Car> allCars = new ArrayList<>();
 	CarDAOImpl carDatabase = new CarDAOImpl();
 	ArrayList<Car> ownedCars = new ArrayList<>();
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5370445995563054109L;
+
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -93,7 +87,7 @@ public class Employee implements Serializable {
 	public void employeeDecision(String option) {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
-		allCars = fleet.getFleet();
+		allCars = carDatabase.selectAllCars();
 		ownedCars = carDatabase.selectAllOwnedCars();
 		switch (option) {
 		case "1":

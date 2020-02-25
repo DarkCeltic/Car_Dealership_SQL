@@ -1,6 +1,5 @@
 package com.revature.users;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,17 +8,11 @@ import org.apache.log4j.Logger;
 import com.revature.dao.CarDAOImpl;
 import com.revature.load_page.LoadPage;
 import com.revature.pojo.Car;
-import com.revature.pojo.Fleet;
 
-public class Customer implements Serializable {
+public class Customer {
 	private static Logger log = Logger.getRootLogger();
-	Fleet fleet = new Fleet();
 	ArrayList<Car> allCars = new ArrayList<>();
 	CarDAOImpl carDatabase = new CarDAOImpl();
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2902279992146909132L;
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -100,7 +93,7 @@ public class Customer implements Serializable {
 		Scanner input = new Scanner(System.in);
 		// This gets an array list from the Fleet class which
 		// gets all the cars from the database where the owner is null
-		allCars = fleet.getFleet();
+		allCars = carDatabase.selectAllCars();
 		myCars = carDatabase.selectCarByOwner(this.username);
 		switch (option) {
 		case "1":
@@ -165,6 +158,7 @@ public class Customer implements Serializable {
 			if (c.getVIN().equals(carVIN)) {
 				System.out.print(this.username);
 				carDatabase.insertOffers(this.username, carVIN, offerPrice);
+				log.info("Your bid for " + c.getYear() + " " + c.getMake() + " " + c.getModel() + " was submitted");
 				break;
 			}
 		}

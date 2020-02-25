@@ -1,25 +1,16 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.revature.users.Customer;
 
-public class Car implements Serializable {
-	/**
-	 * 
-	 */
+public class Car {
+
 	Customer cust;
-	private static final long serialVersionUID = 5948001344421180853L;
-//	private boolean sold = false;
 	private double price;
 	private String owner = null;
 	private String VIN;
 	private String make;
 	private String model;
 	private String year;
-//	private Map<String, Double> offers = new HashMap<String, Double>();
 	private double monthlyPayments;
 
 	public Car(double price, String make, String model, String year) {
@@ -38,7 +29,7 @@ public class Car implements Serializable {
 		this.model = model;
 		this.year = year;
 	}
-	
+
 	public Car(double price, String owner, String vIN, String make, String model, String year) {
 		super();
 		this.price = price;
@@ -203,7 +194,7 @@ public class Car implements Serializable {
 
 	public String toString() {
 		String formatedPrice = String.format("%,.2f", price);
-		return String.format("%4s%20s%18s%15s%12s", year, make, model, "$"+formatedPrice, VIN);
+		return String.format("%4s%20s%18s%15s%12s", year, make, model, "$" + formatedPrice, VIN);
 	}
 //TODO change this to add SQL database offers
 //	public void toStringOffer() {

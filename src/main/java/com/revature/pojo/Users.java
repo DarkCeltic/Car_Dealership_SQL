@@ -1,17 +1,12 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.revature.dao.UsersDAOImpl;
 import com.revature.users.Customer;
 import com.revature.users.Employee;
 
-public class Users implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3603195485041015456L;
+public class Users {
 
 	ArrayList<Customer> customers = new ArrayList<Customer>();
 	ArrayList<Employee> employees = new ArrayList<Employee>();

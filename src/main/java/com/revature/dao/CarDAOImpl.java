@@ -169,7 +169,6 @@ public class CarDAOImpl implements CarDAO {
 				ps.setDouble(3, amount);
 				ps.setBoolean(4, true);
 				ps.executeUpdate();
-				System.out.println("Bid was submitted");
 			} else {
 				System.out.println("You have already submitted an offer for this vehicle");
 			}

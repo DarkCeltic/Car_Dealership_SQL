@@ -166,3 +166,7 @@
 2020-02-24 22:31:03 INFO  root:268 - 1999                Ford              F150      $15000.00       41193 was removed by employee Bjoh
 2020-02-24 22:36:48 INFO  root:255 - 1999 Ford F150 10000.0 was created by Bjoh
 2020-02-24 22:37:22 INFO  root:269 - 1999 Ford F150  was removed by employee Bjoh
+2020-02-25 00:03:54 INFO  root:136 - Dsmi profile created
+2020-02-25 00:07:10 INFO  root:136 - Dbow profile created
+2020-02-25 00:08:29 INFO  root:136 - Dbow profile created
+2020-02-25 00:09:35 INFO  root:136 - Dbow profile created
