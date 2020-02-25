@@ -16,7 +16,7 @@ import com.revature.users.Customer;
 import com.revature.users.Employee;
 
 class UsersDAOImplTest {
-
+	// TESTED ON CAR_DEALERSHIP_TEST
 	@BeforeClass
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -56,5 +56,11 @@ class UsersDAOImplTest {
 		ArrayList<Employee> temps = new ArrayList<>();
 		temps = test.selectAllEmployees();
 		assertFalse("This should not return empty", temps.isEmpty());
+	}
+	@Test
+	void testGetEmployeeByUsername() {
+		UsersDAOImpl test = new UsersDAOImpl();
+		Employee e = test.selectEmployeeByUsername("Bjoh");
+		assertEquals("Bjoh", e.getUsername());
 	}
 }

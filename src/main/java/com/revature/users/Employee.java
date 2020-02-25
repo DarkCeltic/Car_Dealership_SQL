@@ -183,9 +183,8 @@ public class Employee {
 		username = input.nextLine();
 		switch (option) {
 		case "1":
-			carDatabase.acceptOffer(vin);
 			Double amount = carDatabase.getOfferAmount(username, vin);
-			carDatabase.updateCarOwner(username, vin, amount);
+			carDatabase.acceptOffer(vin, username, amount);
 			System.out.println("Year\t\tMake\t\tModel\t\tVIN");
 			for (Car c : allCars) {
 				if (c.getVIN().equals(vin)) {

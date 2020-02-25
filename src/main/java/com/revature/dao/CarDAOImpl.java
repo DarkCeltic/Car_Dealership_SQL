@@ -1,5 +1,6 @@
 package com.revature.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import com.revature.pojo.Car;
 
 public class CarDAOImpl implements CarDAO {
 
-	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership";
+	private static String url = "jdbc:postgresql://localhost:5432/Car_Dealership_Test";
 	private static String username = "postgres";
 	private static String password = "postgres";
 
@@ -44,25 +45,25 @@ public class CarDAOImpl implements CarDAO {
 	}
 
 	// TODO not sure if this is needed yet
-	@Override
-	public Car selectCarByVin(String vin) {
-		Car car = null;
-		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cars WHERE vin=?");
-			ps.setString(1, vin);
-
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				car = new Car(rs.getDouble("price"), rs.getString("vin"), rs.getString("make"), rs.getString("model"),
-						rs.getString("year"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return car;
-	}
+//	@Override
+//	public Car selectCarByVin(String vin) {
+//		Car car = null;
+//		try (Connection conn = DriverManager.getConnection(url, username, password)) {
+//			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cars WHERE vin=?");
+//			ps.setString(1, vin);
+//
+//			ResultSet rs = ps.executeQuery();
+//
+//			while (rs.next()) {
+//				car = new Car(rs.getDouble("price"), rs.getString("vin"), rs.getString("make"), rs.getString("model"),
+//						rs.getString("year"));
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return car;
+//	}
 
 	@Override
 	public ArrayList<Car> selectAllCars() {
@@ -117,20 +118,20 @@ public class CarDAOImpl implements CarDAO {
 		}
 		return car;
 	}
-
-	@Override
-	public void updateCarOwner(String ownerUsername, String vin, Double amount) {
-		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("UPDATE Cars SET owner=?, price=? WHERE vin=?");
-			ps.setString(1, ownerUsername);
-			ps.setDouble(2, amount);
-			ps.setString(3, vin);
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//THis is no longer needed
+//	@Override
+//	public void updateCarOwner(String ownerUsername, String vin, Double amount) {
+//		try (Connection conn = DriverManager.getConnection(url, username, password)) {
+//			PreparedStatement ps = conn.prepareStatement("UPDATE Cars SET owner=?, price=? WHERE vin=?");
+//			ps.setString(1, ownerUsername);
+//			ps.setDouble(2, amount);
+//			ps.setString(3, vin);
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public ArrayList<String> getAllOffers() {
@@ -156,15 +157,18 @@ public class CarDAOImpl implements CarDAO {
 	@Override
 	public void insertOffers(String customerUsername, String vin, double amount) {
 		int vinInteger = Integer.parseInt(vin);
+		String name = null;
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM offers WHERE username= ? AND vin=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT username FROM offers WHERE username= ? AND vin=?");
 			ps.setString(1, customerUsername);
 			ps.setInt(2, vinInteger);
 			ResultSet result = ps.executeQuery();
-
-			if (result.wasNull()) {
+			while (result.next()) {
+				name = result.getString("username");
+			}
+			if (name == null) {
 				ps = conn.prepareStatement("INSERT INTO offers(vin, username, amount, active) VALUES(?,?,?,?)");
-				ps.setString(1, vin);
+				ps.setInt(1, vinInteger);
 				ps.setString(2, customerUsername);
 				ps.setDouble(3, amount);
 				ps.setBoolean(4, true);
@@ -172,7 +176,9 @@ public class CarDAOImpl implements CarDAO {
 			} else {
 				System.out.println("You have already submitted an offer for this vehicle");
 			}
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -192,12 +198,14 @@ public class CarDAOImpl implements CarDAO {
 	}
 
 	@Override
-	public void acceptOffer(String vin) {
+	public void acceptOffer(String vin, String customerUsername, Double amount) {
 		int vinInteger = Integer.parseInt(vin);
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("UPDATE offers SET active=false WHERE vin=?");
-			ps.setInt(1, vinInteger);
-			ps.executeUpdate();
+			CallableStatement callStmnt = conn.prepareCall("{CALL accept_offer(?, ?, ?)}");
+			callStmnt.setInt(1, vinInteger);
+			callStmnt.setString(2, customerUsername);
+			callStmnt.setDouble(3, amount);
+			callStmnt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -206,8 +214,11 @@ public class CarDAOImpl implements CarDAO {
 
 	@Override
 	public Double getOfferAmount(String customerUsername, String vin) {
+		int vinInteger = Integer.parseInt(vin);
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			PreparedStatement ps = conn.prepareStatement("SELECT amount FROM offers WHERE username=? AND vin=?)");
+			PreparedStatement ps = conn.prepareStatement("SELECT amount FROM offers WHERE username=? AND vin=?");
+			ps.setString(1, customerUsername);
+			ps.setInt(2, vinInteger);
 			ResultSet results = ps.executeQuery();
 			while (results.next()) {
 				Double amount = results.getDouble("amount");

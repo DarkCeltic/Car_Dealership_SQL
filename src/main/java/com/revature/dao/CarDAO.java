@@ -12,14 +12,15 @@ public interface CarDAO {
 	public void removeCar(String vin);
 
 	// Find a Car by the VIN
-	public Car selectCarByVin(String vin);
+//	public Car selectCarByVin(String vin);
 
 	// Return all of the Cars
 	public ArrayList<Car> selectAllCars();
 
 	public ArrayList<Car> selectCarByOwner(String customerUsername);
 
-	void updateCarOwner(String customerUsername, String vin, Double amount);
+	// This is handled by the stored procedure
+//	void updateCarOwner(String customerUsername, String vin, Double amount);
 
 	public ArrayList<String> getAllOffers();
 
@@ -27,7 +28,7 @@ public interface CarDAO {
 
 	public void removeOffer(String customerUsername, String vin);
 
-	public void acceptOffer(String vin);
+	public void acceptOffer(String vin, String customerUsername, Double amount);
 
 	public Double getOfferAmount(String customerUsername, String vin);
 
